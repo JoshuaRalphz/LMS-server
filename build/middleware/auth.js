@@ -3,14 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authorizeRoles = exports.isAutheticated = void 0;
+exports.authorizeRoles = exports.isAuthenticated = void 0;
 const catchAsyncErrors_1 = require("./catchAsyncErrors");
 const ErrorHandler_1 = __importDefault(require("../utils/ErrorHandler"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const redis_1 = require("../utils/redis");
 const user_controller_1 = require("../controllers/user.controller");
 // authenticated user
-exports.isAutheticated = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, next) => {
+exports.isAuthenticated = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, next) => {
     const access_token = req.cookies.access_token;
     if (!access_token) {
         return next(new ErrorHandler_1.default("Please login to access this resource", 400));

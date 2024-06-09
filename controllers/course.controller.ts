@@ -228,7 +228,7 @@ interface IAddAnswerData {
   questionId: string;
 }
 
-export const addAnwser = CatchAsyncError(
+export const addAnswer = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { answer, courseId, contentId, questionId }: IAddAnswerData =
