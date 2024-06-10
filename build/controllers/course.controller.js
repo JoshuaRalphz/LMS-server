@@ -136,8 +136,8 @@ exports.addQuestion = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, n
         if (!mongoose_1.default.Types.ObjectId.isValid(contentId)) {
             return next(new ErrorHandler_1.default("Invalid content id", 400));
         }
-        const couseContent = course?.courseData?.find((item) => item._id.equals(contentId));
-        if (!couseContent) {
+        const courseContent = course?.courseData?.find((item) => item._id.equals(contentId));
+        if (!courseContent) {
             return next(new ErrorHandler_1.default("Invalid content id", 400));
         }
         // create a new question object
@@ -147,11 +147,11 @@ exports.addQuestion = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, n
             questionReplies: [],
         };
         // add this question to our course content
-        couseContent.questions.push(newQuestion);
+        courseContent.questions.push(newQuestion);
         await notification_Model_1.default.create({
             user: req.user?._id,
             title: "New Question Received",
-            message: `You have a new question in ${couseContent.title}`,
+            message: `You have a new question in ${courseContent.title}`,
         });
         // save the updated course
         await course?.save();
@@ -171,11 +171,11 @@ exports.addAnswer = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, nex
         if (!mongoose_1.default.Types.ObjectId.isValid(contentId)) {
             return next(new ErrorHandler_1.default("Invalid content id", 400));
         }
-        const couseContent = course?.courseData?.find((item) => item._id.equals(contentId));
-        if (!couseContent) {
+        const courseContent = course?.courseData?.find((item) => item._id.equals(contentId));
+        if (!courseContent) {
             return next(new ErrorHandler_1.default("Invalid content id", 400));
         }
-        const question = couseContent?.questions?.find((item) => item._id.equals(questionId));
+        const question = courseContent?.questions?.find((item) => item._id.equals(questionId));
         if (!question) {
             return next(new ErrorHandler_1.default("Invalid question id", 400));
         }
@@ -194,13 +194,13 @@ exports.addAnswer = (0, catchAsyncErrors_1.CatchAsyncError)(async (req, res, nex
             await notification_Model_1.default.create({
                 user: req.user?._id,
                 title: "New Question Reply Received",
-                message: `You have a new question reply in ${couseContent.title}`,
+                message: `You have a new question reply in ${courseContent.title}`,
             });
         }
         else {
             const data = {
                 name: question.user.name,
-                title: couseContent.title,
+                title: courseContent.title,
             };
             const html = await ejs_1.default.renderFile(path_1.default.join(__dirname, "../mails/question-reply.ejs"), data);
             try {
