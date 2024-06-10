@@ -21,7 +21,7 @@ app.use(cookieParser());
 // cors => cross origin resource sharing
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://learn-hub-c-lient.vercel.app"],
+    origin: ["http://localhost:3000", "https://learnhub-c.vercel.app"],
     credentials: true,
   })
 );
